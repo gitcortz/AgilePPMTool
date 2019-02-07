@@ -1,0 +1,10 @@
+git branch branch1
+git checkout branch1
+
+git add .
+git commit -m "commment"
+git push
+
+git checkout master
+git merge branch1
+git push
