@@ -1,6 +1,7 @@
 package com.dev.ppmtool.services;
 
 import com.dev.ppmtool.domain.Project;
+import com.dev.ppmtool.exceptions.CustomResponseEntityExceptionHandler;
 import com.dev.ppmtool.exceptions.ProjectIdException;
 import com.dev.ppmtool.repositories.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,19 @@ public class ProjectService {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
         } catch (Exception e) {
-            throw new ProjectIdException("Project ID '" + project.getProjectIdentifier().toUpperCase() +"'already exists");
+            throw new ProjectIdException("Project ID '" + project.getProjectIdentifier().toUpperCase() +"' already exists");
         }
 
+    }
+
+    public Project findProjectByIdentifier(String projectId) {
+
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+
+        if (project == null) {
+            throw new ProjectIdException("Project ID '" + projectId + "' does not exists");
+        }
+        return project;
     }
 
 
