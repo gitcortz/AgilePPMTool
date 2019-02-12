@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+@Entity
 public class ProjectTask {
 
     @Id
@@ -18,6 +19,7 @@ public class ProjectTask {
     private Integer priority;
     private Date dueDate;
     //Many to One with Backlog
+
     @Column(updatable = false)
     private String projectIdentifier;
 

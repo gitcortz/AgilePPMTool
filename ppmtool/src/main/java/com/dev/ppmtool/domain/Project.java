@@ -32,17 +32,11 @@ public class Project {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    //
+    private Backlog backlog;
+
     public Project (){
-    }
-
-    @PrePersist
-    protected void OnCreate() {
-        this.setCreatedAt(new Date());
-    }
-
-    @PreUpdate
-    protected void OnUpdate() {
-        this.setUpdatedAt(new Date());
     }
 
     public Long getId() {
@@ -108,4 +102,23 @@ public class Project {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
+    @PrePersist
+    protected void OnCreate() {
+        this.setCreatedAt(new Date());
+    }
+
+    @PreUpdate
+    protected void OnUpdate() {
+        this.setUpdatedAt(new Date());
+    }
+
 }
