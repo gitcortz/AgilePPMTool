@@ -32,7 +32,7 @@ public class BacklogController {
 
         ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask);
 
-        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.CREATED);    
+        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.CREATED);
 
     }
 }

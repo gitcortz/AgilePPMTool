@@ -28,6 +28,7 @@ public class ProjectTaskService {
         Integer backLogSequence = backlog.getPTSequence();
         //update the bl sequence
         backLogSequence++;
+        backlog.setPTSequence(backLogSequence);
         //add sequence to project task
         projectTask.setProjectSequence(projectIdentifier+"-"+backLogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
