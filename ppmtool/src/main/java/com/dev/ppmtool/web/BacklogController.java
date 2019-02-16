@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.BindException;
 
-@Controller
+@RestController
 @RequestMapping("/api/backlog")
 @CrossOrigin
 public class BacklogController {
@@ -33,6 +33,13 @@ public class BacklogController {
         ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask);
 
         return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/{backlog_id}")
+    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
+
+        return projectTaskService.findBacklogById(backlog_id);
 
     }
 }
