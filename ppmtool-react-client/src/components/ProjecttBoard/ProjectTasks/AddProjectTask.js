@@ -28,23 +28,6 @@ class AddProjectTask extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-
-    /*const {
-      id,
-      projectName,
-      projectIdentifier,
-      description,
-      startDate,
-      endDate
-    } = nextProps.project;
-    this.setState({
-      id,
-      projectName,
-      projectIdentifier,
-      description,
-      startDate,
-      endDate
-    });*/
   }
 
   onChange(e) {
