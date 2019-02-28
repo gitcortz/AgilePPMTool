@@ -17,7 +17,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Email(message = "Username needs to be an email")
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "username is required")
     @Column(unique = true)
     private String username;
     @NotBlank(message = "Please enter your full name")
@@ -26,15 +26,13 @@ public class User implements UserDetails {
     private String password;
     @Transient
     private String confirmPassword;
-    private Date createdAt;
-    private Date updatedAt;
+    private Date create_At;
+    private Date update_At;
 
-    //One to many project
+    //OneToMany with Project
 
     public User() {
     }
-
-
 
     public Long getId() {
         return id;
@@ -76,34 +74,34 @@ public class User implements UserDetails {
         this.confirmPassword = confirmPassword;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getCreate_At() {
+        return create_At;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreate_At(Date create_At) {
+        this.create_At = create_At;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Date getUpdate_At() {
+        return update_At;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
     }
 
     @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
+    protected void onCreate(){
+        this.create_At = new Date();
     }
 
     @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
+    protected void onUpdate(){
+        this.update_At = new Date();
     }
 
     /*
-    User Details interface methods
+    UserDetails interface methods
      */
 
     @Override
