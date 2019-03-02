@@ -35,7 +35,7 @@ public class ProjectService {
             }
             else if(existingProject!=null && (!project.getProjectLeader().equals(username))){
                 throw new ProjectNotFoundException("Project not found in your account");
-            } 
+            }
         }
 
         try{

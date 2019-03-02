@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.BindException;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -26,19 +27,21 @@ public class BacklogController {
 
     @PostMapping("/{backlogId}")
     public ResponseEntity<?> addPTtoBacklog(@Valid @RequestBody ProjectTask projectTask,
-                                            BindingResult result, @PathVariable String backlogId) {
+                                            BindingResult result, @PathVariable String backlogId,
+                                            Principal principal) {
+
         ResponseEntity<?> errorMap  = mapValidationErrorService.MapValidationService(result);
         if (errorMap!=null) return errorMap;
 
-        ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask);
+        ProjectTask projectTask1 = projectTaskService.addProjectTask(backlogId, projectTask, principal.getName());
 
         return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.CREATED);
 
     }
 
     @GetMapping("/{backlogId}")
-    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlogId){
-        return projectTaskService.findBacklogById(backlogId);
+    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlogId, Principal principal){
+        return projectTaskService.findBacklogById(backlogId, principal.getName());
     }
 
     @GetMapping("/{backlogId}/{ptId}")
