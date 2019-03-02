@@ -2,6 +2,7 @@ package com.dev.ppmtool.services;
 
 import com.dev.ppmtool.domain.Backlog;
 import com.dev.ppmtool.domain.Project;
+import com.dev.ppmtool.domain.ProjectTask;
 import com.dev.ppmtool.domain.User;
 import com.dev.ppmtool.exceptions.CustomResponseEntityExceptionHandler;
 import com.dev.ppmtool.exceptions.ProjectIdException;
@@ -26,6 +27,17 @@ public class ProjectService {
 
 
     public Project saveOrUpdateProject(Project project, String username){
+
+        if (project.getId() != null){
+            Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
+            if (existingProject == null) {
+                throw new ProjectNotFoundException("Project not ID '" + project.getProjectIdentifier() + "' cannot be updated because it does not exists");
+            }
+            else if(existingProject!=null && (!project.getProjectLeader().equals(username))){
+                throw new ProjectNotFoundException("Project not found in your account");
+            } 
+        }
+
         try{
 
             User user = userRepository.findByUsername(username);
