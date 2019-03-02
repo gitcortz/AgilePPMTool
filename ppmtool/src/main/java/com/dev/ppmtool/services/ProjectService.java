@@ -5,6 +5,7 @@ import com.dev.ppmtool.domain.Project;
 import com.dev.ppmtool.domain.User;
 import com.dev.ppmtool.exceptions.CustomResponseEntityExceptionHandler;
 import com.dev.ppmtool.exceptions.ProjectIdException;
+import com.dev.ppmtool.exceptions.ProjectNotFoundException;
 import com.dev.ppmtool.repositories.BacklogRepository;
 import com.dev.ppmtool.repositories.ProjectRepository;
 import com.dev.ppmtool.repositories.UserRepository;
@@ -48,25 +49,27 @@ public class ProjectService {
 
     }
 
-    public Project findProjectByIdentifier(String projectId) {
+    public Project findProjectByIdentifier(String projectId, String username) {
 
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 
         if (project == null) {
             throw new ProjectIdException("Project ID '" + projectId + "' does not exists");
         }
+        if (!project.getProjectLeader().equals(username)){
+            throw new ProjectNotFoundException("Project not found in your account");
+        }
+
         return project;
     }
 
-    public  Iterable<Project> findAllProjects() {
-        return projectRepository.findAll();
+    public  Iterable<Project> findAllProjects(String username) {
+
+        return projectRepository.findAllByProjectLeader(username);
     }
 
-    public void deleteProjectByIdenifier(String projectId) {
-        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
-        if(project == null) {
-            throw new ProjectIdException("Cannot delete project with ID '" +projectId+ "'. This project does not exists");
-        }
+    public void deleteProjectByIdenifier(String projectId, String username) {
+        Project project = findProjectByIdentifier(projectId, username);
 
         projectRepository.delete(project);
     }
