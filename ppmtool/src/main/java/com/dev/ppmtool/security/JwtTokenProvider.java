@@ -29,7 +29,8 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .setSubject(userId)
-                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .setIssuedAt(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
